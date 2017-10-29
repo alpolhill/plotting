@@ -1,0 +1,40 @@
+---
+title: "Tidying the Data"
+author: "Alex Polhill"
+date: "October 29, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Read in dataset with correct parameters
+power_data <-  read.table("household_power_consumption.txt", header=TRUE, sep=";", na.strings = "?", colClasses = c('character','character','numeric','numeric','numeric','numeric','numeric','numeric','numeric'))
+
+## Format date to Type Date
+power_data$Date <- as.Date(power_data$Date, "%d/%m/%Y")
+
+## Filter data set from Feb. 1, 2007 to Feb. 2, 2007
+power_data_subset <- subset(power_data,Date >= as.Date("2007-2-1") & Date <= as.Date("2007-2-2"))
+
+## Remove incomplete observation
+power_data_subset <- power_data_subset[complete.cases(power_data_subset),]
+
+## Combine Date and Time column
+dateTime <- paste(power_data_subset$Date, power_data_subset$Time)
+
+## Name the vector
+dateTime <- setNames(dateTime, "DateTime")
+
+## Remove Date and Time column
+tidy_power <- power_data_subset[ ,!(names(power_data_subset) %in% c("Date","Time"))]
+
+## Add DateTime column
+tidy_power <- cbind(dateTime, tidy_power)
+
+## Format dateTime Column
+tidy_power$dateTime <- as.POSIXct(dateTime)
+```

@@ -1,0 +1,20 @@
+---
+title: "Plot1"
+author: "Alex Polhill"
+date: "October 29, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Plot 1
+
+```{r pressure}
+
+## Create the histogram
+hist(tidy_power$Global_active_power, main="Global Active Power", xlab = "Global Active Power (kilowatts)", col="red")
+dev.copy(png,"plot1.png", width=480, height=480)
+dev.off()
+```

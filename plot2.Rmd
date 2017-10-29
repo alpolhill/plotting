@@ -1,0 +1,19 @@
+---
+title: "plot2"
+author: "Alex Polhill"
+date: "October 29, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plot 2
+
+```{r pressure}
+## Create Plot 2
+plot(tidy_power$Global_active_power~tidy_power$dateTime, type="l", ylab="Global Active Power (kilowatts)", xlab="")
+dev.copy(png,"plot2.png", width=480, height=480)
+dev.off()
+```
